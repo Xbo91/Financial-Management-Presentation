@@ -325,7 +325,7 @@
         <p style="color: var(--text-dim); margin-bottom: 30px; font-size: 1.1rem;">Slide to adjust the funding amount. Watch how the yearly cost changes automatically based on the risk-adjusted required return.</p>
         
         <div style="margin-bottom: 30px; display: flex; flex-direction: column; align-items: center;">
-          <input type="range" id="fundSlider" class="interactive" min="10" max="200" value="50" step="10" style="width: 100%; max-width: 400px; accent-color: var(--equity);">
+          <input type="range" id="fundSlider" class="interactive" min="0" max="200" value="50" step="10" style="width: 100%; max-width: 400px; accent-color: var(--equity);">
           <div style="font-size: 2rem; font-weight: 700; margin-top: 15px; font-family: 'JetBrains Mono', monospace; color: var(--text);">
             Funding: Rs. <span id="fundAmountDisplay">50</span> Million
           </div>
@@ -637,12 +637,14 @@
   });
 
   // Animate calculator on scroll
-  const calcObserver = new IntersectionObserver((entries, observer) => {
+  let calcAnimId;
+  const calcObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        let startVal = 10;
+        cancelAnimationFrame(calcAnimId);
+        let startVal = 0;
         const targetVal = 50;
-        const duration = 1500; // 1.5 seconds
+        const duration = 3000; // 3.0 seconds (much slower)
         const startTime = performance.now();
 
         function animateSlider(currentTime) {
@@ -656,12 +658,11 @@
           updateCalculator(currentVal);
 
           if (progress < 1) {
-            requestAnimationFrame(animateSlider);
+            calcAnimId = requestAnimationFrame(animateSlider);
           }
         }
         
-        requestAnimationFrame(animateSlider);
-        observer.unobserve(entry.target); // Only animate once
+        calcAnimId = requestAnimationFrame(animateSlider);
       }
     });
   }, { threshold: 0.5 });
