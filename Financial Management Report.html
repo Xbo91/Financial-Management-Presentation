@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financial Management Report - Group 1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --text: #0f172a;
+      --text-dim: #475569;
+      --border: #e2e8f0;
+      --bg: #f8fafc;
+      --accent: #2563eb;
+    }
+    body {
+      font-family: 'Merriweather', serif;
+      color: var(--text);
+      background-color: var(--bg);
+      line-height: 1.8;
+      margin: 0;
+      padding: 0;
+    }
+    .page {
+      background: white;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 80px 100px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      border-radius: 4px;
+    }
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    h1 { font-size: 2.2rem; border-bottom: 2px solid var(--accent); padding-bottom: 20px; margin-bottom: 40px; }
+    h2 { font-size: 1.5rem; margin-top: 50px; margin-bottom: 20px; color: var(--accent); }
+    h3 { font-size: 1.2rem; margin-top: 30px; }
+    p { margin-bottom: 20px; font-size: 1.05rem; }
+    ul { margin-bottom: 20px; font-size: 1.05rem; }
+    li { margin-bottom: 10px; }
+    strong { font-weight: 700; }
+    
+    .cover {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+    .cover h1 { border: none; padding: 0; margin-bottom: 20px; font-size: 2.5rem; }
+    .cover p { font-family: 'Outfit', sans-serif; color: var(--text-dim); font-size: 1.2rem; margin-bottom: 5px; }
+    
+    .members {
+      margin-top: 40px;
+      padding: 30px;
+      background: var(--bg);
+      border-radius: 8px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+    }
+    .members h3 { margin-top: 0; text-align: center; margin-bottom: 20px; }
+    .members-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    
+    /* Print Styles */
+    @media print {
+      body { background: white; }
+      .page { box-shadow: none; margin: 0; padding: 20px; max-width: 100%; border-radius: 0; }
+      .print-btn { display: none !important; }
+    }
+    
+    .print-btn {
+      position: fixed; top: 30px; right: 30px;
+      background: var(--accent); color: white; border: none;
+      padding: 12px 24px; border-radius: 50px; font-family: 'Outfit', sans-serif;
+      font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+      transition: transform 0.2s; display: flex; align-items: center; gap: 8px;
+    }
+    .print-btn:hover { transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+
+  <button class="print-btn" onclick="window.print()">
+    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+    Save as PDF
+  </button>
+
+  <div class="page">
+    <div class="cover">
+      <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; margin-bottom: 20px; color: var(--accent);">Financial Management — Group Work</p>
+      <h1>Cost of Capital, Risk, and Return:<br>A Comparative Analysis</h1>
+      <p>Group 1 Submission</p>
+    </div>
+
+    <h2>Question 1: Recommendation for Raising Rs. 50 Million</h2>
+    <p><strong>Scenario:</strong> A company wants to raise Rs. 50 million to expand its business. The finance manager is considering raising money through a bank loan (debt) at 12% interest, or issuing new shares (equity) to investors who expect an 18% return.</p>
+    <p><strong>Our Recommendation:</strong></p>
+    <p>As a group, our recommendation on whether the company should choose Option A (Debt at 12%) or Option B (Equity at 18%) depends entirely on the <strong>stage, stability, and risk profile</strong> of the company. The decision cannot be made based on the cost of capital alone, because cost is directly tied to the underlying risk.</p>
+    <ul>
+      <li><strong>If the company is mature and established (e.g., PickMe):</strong> We strongly recommend <strong>Option A (Bank Loan at 12%)</strong>. An established company generally has highly predictable, steady cash flows and substantial physical or digital assets. Because their risk of defaulting on loan payments is low, they can safely take advantage of the cheaper 12% cost of capital. The fixed interest payments will not heavily strain their operations, allowing them to maximize value for their existing shareholders.</li>
+      <li><strong>If the company is an early-stage startup (e.g., Lincro.lk):</strong> We strongly recommend <strong>Option B (Equity at 18%)</strong>. Startups inherently possess unpredictable cash flows and often lack physical collateral. Taking on a bank loan forces the company to make rigid, mandatory monthly interest payments. If the expansion project takes longer than expected to generate revenue, the startup risks defaulting and facing bankruptcy. By issuing equity, the company gains flexible capital; shareholders only receive dividends when the company actually turns a profit. Although 18% is mathematically more expensive, it provides the vital safety net a startup requires to survive its growth phase.</li>
+    </ul>
+
+    <h2>Question 2: Why Cost of Capital Differs Between Debt and Equity</h2>
+    <p><strong>Scenario:</strong> The finance manager notes that debt requires paying fixed interest, while equity requires giving returns based on profits. Each option carries different risks and costs.</p>
+    <p>The core principle of financial management dictates that <strong>return is the reward for taking on risk</strong>. The 6% gap between the cost of debt (12%) and the cost of equity (18%) exists solely because an equity investor is exposed to a significantly higher level of risk than a bank.</p>
+    <p>Risk influences the expected return in three primary ways:</p>
+    <ul>
+      <li><strong>Legal Priority of Claims (Insolvency Risk):</strong> In the unfortunate event that a company goes bankrupt and is liquidated, the law dictates a strict hierarchy for repayment. Debt holders (banks) are considered senior creditors and are paid first. Equity shareholders are at the absolute bottom of the hierarchy; they only receive compensation if funds remain after all other debts are settled. Because shareholders are the most likely to lose their entire investment, they demand a higher return (18%) to justify taking that risk.</li>
+      <li><strong>Certainty of Income (Cash Flow Risk):</strong> A bank loan comes with a legally binding contract guaranteeing fixed interest payments at specific intervals, regardless of whether the company is profitable or operating at a loss. Conversely, equity returns are entirely dependent on the company's success. If the company fails to generate profits, the shareholders receive nothing. Investors demand a premium for accepting this uncertainty.</li>
+      <li><strong>Collateral Backing (Security Risk):</strong> Debt is frequently secured against specific company assets (such as real estate or equipment). If the company fails to pay its 12% interest, the bank can seize and sell those assets to recover its capital. Equity investments are unsecured. With no safety net, shareholders expect the company to work harder to provide an 18% return on their unsecured capital.</li>
+    </ul>
+    <p>Ultimately, from the perspective of the provider of funds, equity is riskier than debt. Therefore, to attract equity investors, a company must offer a higher potential return than what they would offer a bank.</p>
+
+    <div class="members">
+      <h3>Group 1 Members</h3>
+      <div class="members-grid">
+        <div>ICT24002 - W.P.A. Gehansa Sathlini</div>
+        <div>ICT24003 - S.M. Kaveesha Yasas Sanjaya</div>
+        <div>ICT24004 - Mr. Hansul Rahman</div>
+        <div>ICT24005 - Vasantharaj Mathisuthan</div>
+        <div>ICT24006 - G.G. Dulakshi Navodya</div>
+        <div>ICT24007 - R.P.D. Hasitha C. Somasiri</div>
+        <div>ICT24008 - S.R. Samson</div>
+        <div>ICT24009 - W.P. Sanduni Imalsha</div>
+        <div>ICT24010 - Yogarasa Kishanthini</div>
+        <div>ICT24011 - Uwais Mohomad Pirithos</div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
