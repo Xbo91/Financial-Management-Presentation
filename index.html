@@ -138,9 +138,31 @@
   }
   .callout strong { color: var(--text); }
 
+  /* Stock Ticker */
+  .ticker-wrap {
+    position: fixed; top: 0; left: 0; width: 100%; height: 36px;
+    background-color: #0f172a; overflow: hidden; z-index: 1000;
+    display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .ticker {
+    display: inline-block; white-space: nowrap; padding-left: 100%;
+    animation: ticker 35s linear infinite;
+  }
+  .ticker:hover { animation-play-state: paused; }
+  @keyframes ticker {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-100%, 0, 0); }
+  }
+  .ticker-item {
+    display: inline-block; padding: 0 2rem; font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem; color: #f8fafc; font-weight: 500;
+  }
+  .ticker-item span.up { color: #10b981; }
+  .ticker-item span.down { color: #ef4444; }
+
   /* Top Navigation Progress Bar */
   .progress-header {
-    position: fixed; left: 0; right: 0; top: 0; height: 6px;
+    position: fixed; left: 0; right: 0; top: 36px; height: 6px;
     background: var(--line-soft);
     z-index: 100;
   }
@@ -159,6 +181,23 @@
 </style>
 </head>
 <body>
+
+<!-- Stock Ticker -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <div class="ticker-item">SAMP.N0000 78.50 <span class="up">▲ 1.2%</span></div>
+    <div class="ticker-item">JKH.N0000 204.00 <span class="down">▼ 0.5%</span></div>
+    <div class="ticker-item">LINCRO (IPO) 150.00 <span class="up">▲ 5.4%</span></div>
+    <div class="ticker-item">PICKME 55.00 <span class="up">▲ 2.1%</span></div>
+    <div class="ticker-item">COMB.N0000 115.20 <span class="up">▲ 0.8%</span></div>
+    <div class="ticker-item">DIAL.N0000 12.40 <span class="down">▼ 1.2%</span></div>
+    <div class="ticker-item">HNB.N0000 210.00 <span class="up">▲ 1.5%</span></div>
+    <div class="ticker-item">EXPO.N0000 145.00 <span class="down">▼ 0.8%</span></div>
+    <div class="ticker-item">SPEN.N0000 95.00 <span class="up">▲ 0.4%</span></div>
+    <div class="ticker-item">LOLC.N0000 450.00 <span class="down">▼ 2.1%</span></div>
+    <div class="ticker-item">AAPL 185.00 <span class="up">▲ 0.4%</span></div>
+  </div>
+</div>
 
 <!-- Scroll Progress Bar -->
 <header class="progress-header">
