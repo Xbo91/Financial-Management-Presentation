@@ -81,6 +81,14 @@
       transition: transform 0.2s; display: flex; align-items: center; gap: 8px;
     }
     .print-btn:hover { transform: translateY(-2px); }
+    
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+      .page { margin: 15px; padding: 30px 20px; }
+      .cover h1 { font-size: 2rem; }
+      .members-grid { grid-template-columns: 1fr; }
+      .print-btn { bottom: 15px; right: 15px; top: auto; padding: 10px 16px; font-size: 0.9rem; }
+    }
   </style>
 </head>
 <body>
