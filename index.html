@@ -27,43 +27,44 @@
   }
 
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
+  html, body { margin: 0; padding: 0; scroll-behavior: smooth; }
   body {
     background-color: var(--ink);
     color: var(--text);
     font-family: 'Outfit', sans-serif;
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
   }
   ::selection { background: var(--equity); color: #fff; }
 
   h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; margin: 0; letter-spacing: -0.02em; }
   .mono { font-family: 'JetBrains Mono', monospace; }
 
-  /* Fluid Backgrounds */
-  .bg-image {
-    position: absolute; inset: 0;
-    background-size: cover; background-position: center;
-    opacity: 0; transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 0;
+  /* Sections */
+  .section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 5%;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Creates parallax effect */
   }
-  .bg-image::after {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(to bottom, rgba(248,250,252,0.85), var(--ink));
+  
+  .bg-cover {
+    background-image: linear-gradient(to bottom, rgba(248,250,252,0.85), rgba(248,250,252,0.95)), url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=1920');
   }
-  .bg-image.active { opacity: 0.8; }
+  .bg-lincro {
+    background-image: linear-gradient(to bottom, rgba(248,250,252,0.85), rgba(248,250,252,0.95)), url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1920');
+  }
+  .bg-pickme {
+    background-image: linear-gradient(to bottom, rgba(248,250,252,0.85), rgba(248,250,252,0.95)), url('https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=1920');
+  }
+  .bg-plain {
+    background-color: var(--ink);
+  }
 
-  /* Deck & Slides */
-  #deck { position: relative; height: 100vh; width: 100vw; z-index: 10; }
-  .slide {
-    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-    padding: 6vh 9vw 11vh; opacity: 0; visibility: hidden;
-    transform: scale(0.96) translateY(20px);
-    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.7s;
-  }
-  .slide.active { opacity: 1; visibility: visible; transform: scale(1) translateY(0); }
-  .slide-inner { max-width: 1200px; width: 100%; position: relative; z-index: 1; }
+  .section-inner { max-width: 1200px; width: 100%; position: relative; z-index: 1; }
 
   /* Glassmorphism Components */
   .glass-panel {
@@ -137,45 +138,36 @@
   }
   .callout strong { color: var(--text); }
 
-  /* Controls */
-  .controls {
-    position: fixed; left: 0; right: 0; bottom: 0; height: 80px;
-    display: flex; align-items: center; gap: 24px; padding: 0 40px;
-    background: linear-gradient(0deg, var(--ink) 20%, rgba(248,250,252,0) 100%);
-    z-index: 50;
+  /* Top Navigation Progress Bar */
+  .progress-header {
+    position: fixed; left: 0; right: 0; top: 0; height: 6px;
+    background: var(--line-soft);
+    z-index: 100;
   }
-  .nav-btn {
-    width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line);
-    background: var(--glass-bg); backdrop-filter: blur(8px); color: var(--text);
-    display: flex; align-items: center; justify-content: center; cursor: pointer;
-    transition: all 0.2s; flex: 0 0 auto; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  .progress-fill {
+    height: 100%;
+    background: var(--equity);
+    width: 0%;
   }
-  .nav-btn:hover:not(.disabled) { border-color: var(--equity); color: var(--equity); transform: scale(1.05); background: #ffffff; }
-  .nav-btn.disabled { opacity: 0.3; cursor: not-allowed; box-shadow: none; }
-  .nav-btn svg { width: 20px; height: 20px; }
-  .progress-track { flex: 1; height: 4px; background: var(--line-soft); position: relative; border-radius: 4px; overflow: hidden; }
-  .progress-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--equity); width: 0%; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-  .counter { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: 600; color: var(--text-dim); }
 
   @media (max-width: 1024px) {
     .roadmap { grid-template-columns: 1fr 1fr; }
     .twocol, .profile-grid { grid-template-columns: 1fr; }
     .company-logo { margin-bottom: 20px; }
+    .section { padding: 60px 5%; }
   }
 </style>
 </head>
 <body>
 
-<!-- Dynamic Backgrounds -->
-<div class="bg-image bg-cover" style="background-image: url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=1920');"></div>
-<div class="bg-image bg-lincro" style="background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1920');"></div>
-<div class="bg-image bg-pickme" style="background-image: url('https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=1920');"></div>
-
-<main id="deck">
+<!-- Scroll Progress Bar -->
+<header class="progress-header">
+  <div class="progress-fill" id="progressFill"></div>
+</header>
 
   <!-- 0: COVER -->
-  <section class="slide active" data-bg="bg-cover">
-    <div class="slide-inner glass-panel">
+  <section class="section bg-cover">
+    <div class="section-inner glass-panel">
       <p class="kicker">Financial Management — Group Presentation</p>
       <h1 class="display">What Does Money<br>Actually Cost?</h1>
       <div style="height: 3px; background: var(--line); margin: 30px 0; max-width: 120px; border-radius: 3px;"></div>
@@ -184,8 +176,8 @@
   </section>
 
   <!-- 1: ROADMAP -->
-  <section class="slide" data-bg="bg-cover">
-    <div class="slide-inner">
+  <section class="section bg-plain">
+    <div class="section-inner">
       <p class="kicker">Agenda</p>
       <h2 class="display">The Path Ahead</h2>
       <div class="roadmap">
@@ -214,8 +206,8 @@
   </section>
 
   <!-- 2: RISK & RETURN (Chart) -->
-  <section class="slide">
-    <div class="slide-inner">
+  <section class="section bg-plain">
+    <div class="section-inner">
       <p class="kicker">Core Concept</p>
       <h2 class="display">Why Money Costs Money</h2>
       <p class="lede">Return is the reward for taking on Risk. The more uncertain an investor feels about getting their money back, the higher the return they will demand.</p>
@@ -227,8 +219,8 @@
   </section>
 
   <!-- 3: DEBT VS EQUITY -->
-  <section class="slide">
-    <div class="slide-inner">
+  <section class="section bg-cover">
+    <div class="section-inner glass-panel">
       <p class="kicker">The Rs. 50 Million Question</p>
       <h2 class="display">Two Very Different Promises</h2>
       <div class="twocol">
@@ -257,8 +249,8 @@
   </section>
 
   <!-- 4: WHY COST DIFFERS -->
-  <section class="slide">
-    <div class="slide-inner">
+  <section class="section bg-plain">
+    <div class="section-inner">
       <p class="kicker">Answering Question 2</p>
       <h2 class="display">Why the 6% Gap?</h2>
       <div class="ledger glass-panel">
@@ -279,8 +271,8 @@
   </section>
 
   <!-- 5: LINCRO (Startup) -->
-  <section class="slide" data-bg="bg-lincro">
-    <div class="slide-inner glass-panel">
+  <section class="section bg-lincro">
+    <div class="section-inner glass-panel">
       <p class="kicker">Case Study A — High Risk</p>
       <div class="profile-grid">
         <div>
@@ -304,8 +296,8 @@
   </section>
 
   <!-- 6: PICKME (Established) -->
-  <section class="slide" data-bg="bg-pickme">
-    <div class="slide-inner glass-panel">
+  <section class="section bg-pickme">
+    <div class="section-inner glass-panel">
       <p class="kicker">Case Study B — Lower Risk</p>
       <div class="profile-grid">
         <div>
@@ -329,13 +321,13 @@
   </section>
 
   <!-- 7: THE VERDICT -->
-  <section class="slide">
-    <div class="slide-inner">
+  <section class="section bg-plain">
+    <div class="section-inner">
       <p class="kicker">Answering Question 1</p>
       <h2 class="display">Our Recommendation</h2>
       
-      <div style="display:flex; gap: 40px; align-items:center;">
-        <div style="flex:1;">
+      <div style="display:flex; gap: 40px; align-items:center; flex-wrap: wrap;">
+        <div style="flex: 1 1 400px;">
           <div class="glass-panel" style="padding: 30px;">
             <h3 style="margin-bottom:20px; font-size: 1.5rem;">Cost Comparison</h3>
             <div class="chart-container small" style="margin-top:0;">
@@ -343,7 +335,7 @@
             </div>
           </div>
         </div>
-        <div style="flex:1;">
+        <div style="flex: 1 1 400px;">
           <ul style="font-size: 1.25rem; line-height: 1.8; list-style:none; padding:0; color:var(--text-dim);">
             <li style="margin-bottom: 24px;"><strong style="color:var(--text);">If the company is mature (like PickMe):</strong> We recommend <strong>Option A (12% Debt)</strong>. It is significantly cheaper, and steady cash flows reduce the risk of defaulting.</li>
             <li><strong style="color:var(--text);">If the company is a startup (like Lincro):</strong> We recommend <strong>Option B (18% Equity)</strong>. Although it is more expensive on paper, equity is flexible. It avoids the deadly risk of bankruptcy if the startup fails to generate immediate cash for interest payments.</li>
@@ -354,74 +346,24 @@
   </section>
 
   <!-- 8: CONCLUSION -->
-  <section class="slide" data-bg="bg-cover">
-    <div class="slide-inner glass-panel" style="text-align: center; padding: 80px 40px;">
+  <section class="section bg-cover" style="min-height: 80vh;">
+    <div class="section-inner glass-panel" style="text-align: center; padding: 80px 40px;">
       <h1 class="display" style="background: none; -webkit-text-fill-color: initial; color: var(--text);">Thank You</h1>
       <div style="height: 3px; background: var(--line); margin: 30px auto; max-width: 80px; border-radius: 3px;"></div>
       <p class="lede" style="margin: 0 auto; color: var(--text-dim);">Cost of capital isn't just a number; it's the price of risk.<br><strong style="color:var(--text); font-weight:600; margin-top:10px; display:inline-block;">Questions & Discussion?</strong></p>
     </div>
   </section>
 
-</main>
-
-<!-- Navigation Controls -->
-<nav class="controls">
-  <button class="nav-btn disabled" id="prevBtn" aria-label="Previous">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-  </button>
-  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-  <span class="counter" id="counter">01 / 09</span>
-  <button class="nav-btn" id="nextBtn" aria-label="Next">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-  </button>
-</nav>
 
 <script>
-  // Slide Logic
-  const slides = document.querySelectorAll('.slide');
-  const bgImages = document.querySelectorAll('.bg-image');
-  const total = slides.length;
-  let current = 0;
-
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
+  // Scroll Progress Bar Logic
   const progressFill = document.getElementById('progressFill');
-  const counter = document.getElementById('counter');
 
-  function updateBackground(bgClass) {
-    bgImages.forEach(bg => {
-      if(bgClass && bg.classList.contains(bgClass)) {
-        bg.classList.add('active');
-      } else {
-        bg.classList.remove('active');
-      }
-    });
-  }
-
-  function show(i) {
-    i = Math.max(0, Math.min(total - 1, i));
-    slides.forEach((s, idx) => {
-      s.classList.toggle('active', idx === i);
-    });
-    
-    const activeSlide = slides[i];
-    const bgClass = activeSlide.getAttribute('data-bg');
-    updateBackground(bgClass);
-
-    current = i;
-    progressFill.style.width = (((i + 1) / total) * 100) + '%';
-    counter.textContent = `${(i + 1).toString().padStart(2, '0')} / ${total.toString().padStart(2, '0')}`;
-    
-    prevBtn.classList.toggle('disabled', i === 0);
-    nextBtn.classList.toggle('disabled', i === total - 1);
-  }
-
-  prevBtn.addEventListener('click', () => show(current - 1));
-  nextBtn.addEventListener('click', () => show(current + 1));
-
-  document.addEventListener('keydown', (e) => {
-    if(e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(current + 1); }
-    else if(e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(current - 1); }
+  window.addEventListener('scroll', () => {
+    const scrollPosition = window.scrollY;
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollPosition / scrollHeight) * 100;
+    progressFill.style.width = progress + '%';
   });
 
   // Chart.js Configuration for Light Theme
@@ -430,8 +372,6 @@
   Chart.defaults.font.size = 14;
 
   window.onload = () => {
-    show(0);
-
     // 1. Risk vs Return Curve
     const ctxRisk = document.getElementById('riskReturnChart').getContext('2d');
     new Chart(ctxRisk, {
