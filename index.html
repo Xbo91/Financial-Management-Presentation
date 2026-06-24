@@ -626,12 +626,47 @@
   const debtCostDisplay = document.getElementById('debtCostDisplay');
   const equityCostDisplay = document.getElementById('equityCostDisplay');
 
-  fundSlider.addEventListener('input', (e) => {
-    const val = parseInt(e.target.value);
+  function updateCalculator(val) {
     fundAmountDisplay.textContent = val;
     debtCostDisplay.textContent = (val * 0.12).toFixed(2);
     equityCostDisplay.textContent = (val * 0.18).toFixed(2);
+  }
+
+  fundSlider.addEventListener('input', (e) => {
+    updateCalculator(parseInt(e.target.value));
   });
+
+  // Animate calculator on scroll
+  const calcObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        let startVal = 10;
+        const targetVal = 50;
+        const duration = 1500; // 1.5 seconds
+        const startTime = performance.now();
+
+        function animateSlider(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          // Easing function (easeOutExpo)
+          const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+          
+          const currentVal = Math.round(startVal + (targetVal - startVal) * easeProgress);
+          fundSlider.value = currentVal;
+          updateCalculator(currentVal);
+
+          if (progress < 1) {
+            requestAnimationFrame(animateSlider);
+          }
+        }
+        
+        requestAnimationFrame(animateSlider);
+        observer.unobserve(entry.target); // Only animate once
+      }
+    });
+  }, { threshold: 0.5 });
+
+  calcObserver.observe(fundSlider);
 </script>
 </body>
 </html>
