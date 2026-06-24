@@ -179,10 +179,43 @@
     .company-logo { margin-bottom: 20px; }
     .section { padding: 60px 5%; }
   }
+
+  /* Custom Cursor */
+  body, a, button, input, .ticker-item, .road-item { cursor: none !important; }
+  .cursor-dot, .cursor-outline {
+    position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
+    border-radius: 50%; z-index: 9999; pointer-events: none;
+  }
+  .cursor-dot { width: 8px; height: 8px; background-color: var(--equity); }
+  .cursor-outline { width: 40px; height: 40px; border: 2px solid rgba(234,88,12,0.5); transition: width 0.2s, height 0.2s, background-color 0.2s; }
+  .cursor-hover { width: 60px !important; height: 60px !important; background-color: rgba(234,88,12,0.1); border-color: var(--equity); }
+
+  /* Scroll Reveal */
+  .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
+  .reveal.active { opacity: 1; transform: translateY(0); }
+
+  /* Download Button */
+  .download-btn {
+    position: fixed; bottom: 30px; right: 30px; background: rgba(255,255,255,0.8);
+    backdrop-filter: blur(10px); border: 1px solid var(--line-soft);
+    padding: 12px 24px; border-radius: 50px; display: flex; align-items: center; gap: 10px;
+    font-weight: 600; color: var(--text); text-decoration: none; z-index: 1000;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: all 0.3s ease;
+  }
+  .download-btn:hover { background: #fff; transform: translateY(-3px); box-shadow: 0 15px 40px rgba(234,88,12,0.2); border-color: var(--equity); color: var(--equity); }
 </style>
 </head>
 <body>
 
+<!-- Custom Cursor -->
+<div class="cursor-dot"></div>
+<div class="cursor-outline"></div>
+
+<!-- Download Button -->
+<a href="Financial Management - Group Work.pdf" download class="download-btn interactive">
+  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+  Download PDF Report
+</a>
 <!-- Stock Ticker -->
 <div class="ticker-wrap">
   <div class="ticker">
@@ -285,6 +318,31 @@
           </ul>
         </div>
       </div>
+      
+      <!-- Interactive Calculator -->
+      <div class="glass-panel" style="margin-top: 50px; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto; position: relative;">
+        <h3 style="margin-bottom: 20px; color: var(--text); font-size: 2rem;">Interactive Cost Calculator</h3>
+        <p style="color: var(--text-dim); margin-bottom: 30px; font-size: 1.1rem;">Slide to adjust the funding amount. Watch how the yearly cost changes automatically based on the risk-adjusted required return.</p>
+        
+        <div style="margin-bottom: 30px; display: flex; flex-direction: column; align-items: center;">
+          <input type="range" id="fundSlider" class="interactive" min="10" max="200" value="50" step="10" style="width: 100%; max-width: 400px; accent-color: var(--equity);">
+          <div style="font-size: 2rem; font-weight: 700; margin-top: 15px; font-family: 'JetBrains Mono', monospace; color: var(--text);">
+            Funding: Rs. <span id="fundAmountDisplay">50</span> Million
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div style="padding: 20px; background: rgba(0,0,0,0.02); border: 1px solid var(--line-soft); border-radius: 12px;">
+            <div style="font-weight: 600; color: var(--debt); margin-bottom: 10px;">Bank Loan (12%)</div>
+            <div style="font-size: 1.5rem; font-family: 'JetBrains Mono';">Rs. <span id="debtCostDisplay">6.00</span> M / yr</div>
+          </div>
+          <div style="padding: 20px; background: rgba(0,0,0,0.02); border: 1px solid var(--line-soft); border-radius: 12px;">
+            <div style="font-weight: 600; color: var(--equity); margin-bottom: 10px;">Equity Shares (18%)</div>
+            <div style="font-size: 1.5rem; font-family: 'JetBrains Mono';">Rs. <span id="equityCostDisplay">9.00</span> M / yr</div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -558,6 +616,46 @@
       }
     });
   };
+
+  // Add reveal class to animate elements
+  document.querySelectorAll('.section-inner, .road-item, .ledger-row, .profile-grid > div, .glass-panel').forEach(el => el.classList.add('reveal'));
+
+  // Scroll Reveal Logic
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(reveal => revealObserver.observe(reveal));
+
+  // Custom Cursor Logic
+  const cursorDot = document.querySelector('.cursor-dot');
+  const cursorOutline = document.querySelector('.cursor-outline');
+  window.addEventListener('mousemove', function (e) {
+    cursorDot.style.left = e.clientX + 'px';
+    cursorDot.style.top = e.clientY + 'px';
+    cursorOutline.animate({ left: e.clientX + 'px', top: e.clientY + 'px' }, { duration: 200, fill: "forwards" });
+  });
+  document.querySelectorAll('a, button, input, .interactive, .road-item').forEach(el => {
+    el.addEventListener('mouseenter', () => cursorOutline.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', () => cursorOutline.classList.remove('cursor-hover'));
+  });
+
+  // Calculator Logic
+  const fundSlider = document.getElementById('fundSlider');
+  const fundAmountDisplay = document.getElementById('fundAmountDisplay');
+  const debtCostDisplay = document.getElementById('debtCostDisplay');
+  const equityCostDisplay = document.getElementById('equityCostDisplay');
+
+  fundSlider.addEventListener('input', (e) => {
+    const val = parseInt(e.target.value);
+    fundAmountDisplay.textContent = val;
+    debtCostDisplay.textContent = (val * 0.12).toFixed(2);
+    equityCostDisplay.textContent = (val * 0.18).toFixed(2);
+  });
 </script>
 </body>
 </html>
